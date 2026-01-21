@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoiceSearch - Start</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>VoiceSearch</h1>
+        <p class="subtitle">Iterative Text-to-Audio Prompt Search</p>
+        
+        <form id="startForm">
+            <div class="form-group">
+                <label>Language</label>
+                <select name="language" id="language">
+                    <option value="zh" selected>Chinese (zh)</option>
+                    <option value="en">English (en)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Preview Text (The text to be spoken)</label>
+                <textarea name="preview_text" id="preview_text" rows="3">你好，这是一个语音风格搜索测试。请保持自然清晰。</textarea>
+            </div>
+
+            <div class="settings-grid">
+                <div class="form-group">
+                    <label>Candidates per Iteration</label>
+                    <input type="number" name="candidates_per_iter" value="3" min="1" max="5">
+                </div>
+                <div class="form-group">
+                    <label>Max Iterations</label>
+                    <input type="number" name="max_iters" value="20">
+                </div>
+                <div class="form-group">
+                    <label>Dedup Threshold</label>
+                    <input type="number" name="dedup_threshold" value="0.92" step="0.01">
+                </div>
+            </div>
+
+            <button type="submit" class="btn primary" id="startBtn">Start Session</button>
+        </form>
+    </div>
+    <script src="/static/main.js"></script>
+</body>
+</html>

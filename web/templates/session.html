@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoiceSearch - Session</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="app-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>VoiceSearch</h2>
+                <span id="session-id-display">{{ session.session_id }}</span>
+            </div>
+            
+            <div class="best-so-far-section">
+                <h3>Best So Far</h3>
+                <div id="best-so-far-container">
+                    <p class="placeholder">No best selection yet.</p>
+                </div>
+            </div>
+
+            <div class="actions">
+                <a href="/api/session/{{ session.session_id }}/export" target="_blank" class="btn secondary">Export Session JSON</a>
+                <a href="/" class="btn secondary">New Session</a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="iteration-header">
+                <h2>Iteration <span id="iter-num">1</span></h2>
+                <p>Listen to the candidates and select the best one to refine.</p>
+            </header>
+
+            <div id="candidates-container" class="candidates-grid">
+                <!-- Candidates injected here -->
+                {% for cand in session.iterations[-1].candidates %}
+                <div class="candidate-card" data-id="{{ cand.cand_id }}">
+                    <div class="card-header">
+                        <span class="badge {{ cand.type }}">{{ cand.type }}</span>
+                        <span class="cand-id">#{{ cand.cand_id }}</span>
+                    </div>
+                    
+                    <div class="audio-wrapper">
+                        <audio controls src="{{ cand.audio_path }}"></audio>
+                    </div>
+                    
+                    <div class="info">
+                        <details>
+                            <summary>Instruct</summary>
+                            <p class="text-sm">{{ cand.instruct }}</p>
+                        </details>
+                        <p class="rationale"><strong>Rationale:</strong> {{ cand.rationale }}</p>
+                    </div>
+
+                    <div class="rating-area">
+                        <label>Rating (1-5):</label>
+                        <div class="stars" data-cand="{{ cand.cand_id }}">
+                            <input type="number" min="1" max="5" value="3" class="rating-input">
+                        </div>
+                    </div>
+
+                    <div class="selection-area">
+                        <label class="radio-label">
+                            <input type="radio" name="best_candidate" value="{{ cand.cand_id }}">
+                            Select as Best
+                        </label>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <section class="feedback-section">
+                <h3>Feedback for Next Iteration</h3>
+                <textarea id="user-note" placeholder="Optional: Make it faster, more energetic, less breathy..."></textarea>
+                <button id="next-iter-btn" class="btn primary">Generate Next Iteration</button>
+            </section>
+        </main>
+    </div>
+    
+    <!-- Pass session ID to JS -->
+    <script>
+        const SESSION_ID = "{{ session.session_id }}";
+        const CURRENT_ITER = {{ session.iterations[-1].iter }};
+    </script>
+    <script src="/static/main.js"></script>
+</body>
+</html>

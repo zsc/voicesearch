@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+jinja2
+huggingface_hub
+gradio_client
+sentence-transformers
+numpy
+soundfile
+python-multipart
+torch
+scipy

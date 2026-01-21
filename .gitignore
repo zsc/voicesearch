@@ -1,0 +1,32 @@
+# Core
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Data
+data/
+voicesearch/data/
+*.wav
+
+# Env
+.env
+venv/
+.venv/
+env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+.DS_Store
+
+# Temp
+/tmp/
+voicesearch_*.json
+*.log
+
+# Mac
+.AppleDouble
+.LSOverride
+._*
